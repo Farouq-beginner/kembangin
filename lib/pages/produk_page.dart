@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../widgets/beflorist_drawer.dart';
 import '../models/user.dart';
 
+// Import subcategories page
 import 'subcategories/fresh_flowers_page.dart';
 import 'subcategories/artificial_flowers_page.dart';
 import 'subcategories/bouquet_page.dart';
@@ -10,11 +11,6 @@ import 'subcategories/hampers_page.dart';
 import 'subcategories/papan_bunga_page.dart';
 import 'subcategories/giftbox_page.dart';
 import 'subcategories/aksesoris_page.dart';
-
-import 'home_sections/promo_page.dart';
-import 'home_sections/produk_terbaru_page.dart';
-import 'home_sections/best_seller_page.dart';
-import 'home_sections/testimoni_page.dart';
 
 class ProdukPage extends StatefulWidget {
   final User currentUser;
@@ -36,11 +32,6 @@ class _ProdukPageState extends State<ProdukPage> {
     "Papan Bunga",
     "Gift Box",
     "Aksesoris",
-    // ✅ Tambahan kategori baru
-    "Promo & Diskon",
-    "Produk Terbaru",
-    "Best Seller",
-    "Testimoni",
   ];
 
   List<String> filteredProduk = [];
@@ -70,7 +61,6 @@ class _ProdukPageState extends State<ProdukPage> {
     });
   }
 
-  // ✅ Fungsi mapping kategori → halaman
   Widget _getPage(String name) {
     switch (name) {
       case "Fresh Flowers":
@@ -87,17 +77,6 @@ class _ProdukPageState extends State<ProdukPage> {
         return GiftBoxPage(currentUser: widget.currentUser);
       case "Aksesoris":
         return AksesorisPage(currentUser: widget.currentUser);
-
-      // ✅ Tambahan mapping kategori baru
-      case "Promo & Diskon":
-        return PromoPage(currentUser: widget.currentUser);
-      case "Produk Terbaru":
-        return ProdukTerbaruPage(currentUser: widget.currentUser);
-      case "Best Seller":
-        return BestSellerPage(currentUser: widget.currentUser);
-      case "Testimoni":
-        return TestimoniPage(currentUser: widget.currentUser);
-
       default:
         return FreshFlowersPage(currentUser: widget.currentUser);
     }
@@ -125,24 +104,25 @@ class _ProdukPageState extends State<ProdukPage> {
       ),
       body: Stack(
         children: [
-          // Background
+          // Background safe, kalau asset hilang pakai warna
           Positioned.fill(
             child: Container(
-              decoration: const BoxDecoration(
-                image: DecorationImage(
+              decoration: BoxDecoration(
+                color: Colors.pink[50],
+                image: const DecorationImage(
                   image: AssetImage("assets/images/dashboard_bg.jpeg"),
                   fit: BoxFit.cover,
+                  opacity: 0.3,
                 ),
               ),
             ),
           ),
-          // Konten
           Padding(
             padding: const EdgeInsets.all(20),
             child: Column(
               children: [
                 const SizedBox(height: 20),
-                // Search Bar
+                // Search bar
                 Center(
                   child: Container(
                     width: screenWidth * 0.6,
@@ -219,7 +199,6 @@ class _ProdukPageState extends State<ProdukPage> {
                               trailing: const Icon(Icons.arrow_forward_ios,
                                   color: Colors.white, size: 18),
                               onTap: () {
-                                // ✅ Arahkan ke subkategori sesuai
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(

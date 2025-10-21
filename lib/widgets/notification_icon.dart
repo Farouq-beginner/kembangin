@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../pages/notifications_page.dart'; 
+import '../pages/notification_page.dart'; 
 
 class NotificationIcon extends StatelessWidget {
   const NotificationIcon({super.key});

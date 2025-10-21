@@ -1,48 +1,88 @@
-// lib/pages/favorite_page.dart
 import 'package:flutter/material.dart';
 import '../widgets/beflorist_drawer.dart';
-import '../models/user.dart';
+import '../../models/user.dart';
+import '../../models/product.dart';
+import '../../services/favorite_service.dart';
 
-class FavoritePage extends StatelessWidget {
-  final User currentUser; // ✅ pakai User object
+class FavoritePage extends StatefulWidget {
+  final User currentUser;
 
   const FavoritePage({super.key, required this.currentUser});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      // ✅ Drawer pakai currentUser
-      drawer: BefloristDrawer(
-        selectedIndex: 3,
-        onItemSelected: (_) {},
-        currentUser: currentUser, // kirim User object
-      ),
+  State<FavoritePage> createState() => _FavoritePageState();
+}
 
+class _FavoritePageState extends State<FavoritePage> {
+  void _removeFromFavorite(Product product) {
+    FavoriteService().remove(product);
+    setState(() {});
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text("${product.name} dihapus dari favorite ❌"),
+        backgroundColor: Colors.pink[300],
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final favorites = FavoriteService().favorites;
+
+    return Scaffold(
+      drawer: BefloristDrawer(
+        selectedIndex: 3, 
+        currentUser: widget.currentUser,
+        onItemSelected: (_) {},
+      ),
       appBar: AppBar(
-        title: const Text(
-          "Favorite",
-          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
-        ),
+        title: const Text("Favorite", style: TextStyle(fontWeight: FontWeight.bold)),
         centerTitle: true,
-        backgroundColor: const Color.fromRGBO(255, 182, 193, 1),
-        iconTheme: const IconThemeData(color: Colors.white),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            Text(
-              "Favorite dari: ${currentUser.username}",
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-            ),
-            const SizedBox(height: 20),
-            const Text(
-              "Daftar produk favorit akan ditampilkan di sini.",
-              style: TextStyle(fontSize: 16, color: Colors.black54),
-            ),
-          ],
+        backgroundColor: Colors.pink[200],
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: const Icon(Icons.menu),
+            onPressed: () => Scaffold.of(context).openDrawer(),
+          ),
         ),
       ),
+      body: favorites.isEmpty
+          ? const Center(
+              child: Text(
+                "Belum ada produk di favorite ❤️",
+                style: TextStyle(fontSize: 16),
+              ),
+            )
+          : ListView.builder(
+              padding: const EdgeInsets.all(10),
+              itemCount: favorites.length,
+              itemBuilder: (context, index) {
+                final product = favorites[index];
+                return Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12)),
+                  elevation: 3,
+                  margin: const EdgeInsets.symmetric(vertical: 6),
+                  child: ListTile(
+                    leading: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Image.asset(
+                        product.image,
+                        width: 60,
+                        height: 60,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    title: Text(product.name, style: const TextStyle(fontWeight: FontWeight.bold)),
+                    subtitle: Text("Rp ${product.price}", style: const TextStyle(color: Colors.red)),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.delete, color: Colors.pink),
+                      onPressed: () => _removeFromFavorite(product),
+                    ),
+                  ),
+                );
+              },
+            ),
     );
   }
 }

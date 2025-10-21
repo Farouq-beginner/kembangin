@@ -4,12 +4,11 @@ import 'package:url_launcher/url_launcher.dart';
 import '../widgets/beflorist_drawer.dart';
 import '../widgets/notification_icon.dart';
 import '../models/user.dart';
-
 import 'produk_page.dart';
-import 'home_sections/promo_page.dart';
-import 'home_sections/produk_terbaru_page.dart';
+import 'home_sections/diskon_page.dart';
+import 'home_sections/tentang_kami_page.dart';
 import 'home_sections/best_seller_page.dart';
-import 'home_sections/testimoni_page.dart';
+import 'home_sections/review_page.dart';
 
 class HomePage extends StatelessWidget {
   final User currentUser;
@@ -170,29 +169,7 @@ class HomePage extends StatelessWidget {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (_) => PromoPage(currentUser: currentUser)),
-                        );
-                      },
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-
-                  // Produk Terbaru
-                  Card(
-                    elevation: 4,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                    child: ListTile(
-                      leading: const Icon(Icons.fiber_new, color: Colors.blue),
-                      title: const Text(
-                        "Produk Terbaru",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      subtitle: const Text("Temukan koleksi bunga terbaru 💐"),
-                      trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (_) => ProdukTerbaruPage(currentUser: currentUser)),
+                          MaterialPageRoute(builder: (_) => DiskonPage(currentUser: currentUser)),
                         );
                       },
                     ),
@@ -221,14 +198,14 @@ class HomePage extends StatelessWidget {
                   ),
                   const SizedBox(height: 12),
 
-                  // Testimoni
+                  // Review
                   Card(
                     elevation: 4,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                     child: ListTile(
                       leading: const Icon(Icons.chat, color: Colors.green),
                       title: const Text(
-                        "Testimoni",
+                        "Review Pelanggan",
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       subtitle: const Text("Lihat pengalaman nyata dari pelanggan 💬"),
@@ -236,14 +213,14 @@ class HomePage extends StatelessWidget {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (_) => TestimoniPage(currentUser: currentUser)),
+                          MaterialPageRoute(builder: (_) => ReviewPage(currentUser: currentUser)),
                         );
                       },
                     ),
                   ),
                   const SizedBox(height: 12),
 
-                  // 🔥 Tambahan: Lihat Semua Produk
+                  // Lihat Semua Produk
                   Card(
                     elevation: 4,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -259,6 +236,28 @@ class HomePage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (_) => ProdukPage(currentUser: currentUser)),
+                        );
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+
+                  // Tentang Kami (di bagian bawah sendiri)
+                  Card(
+                    elevation: 4,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    child: ListTile(
+                      leading: const Icon(Icons.info, color: Colors.blue),
+                      title: const Text(
+                        "Tentang Kami",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: const Text("Kenali lebih dekat tentang toko Beflorist 🌸"),
+                      trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => TentangKamiPage(currentUser: currentUser)),
                         );
                       },
                     ),

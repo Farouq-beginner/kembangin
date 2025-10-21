@@ -1,3 +1,4 @@
+// lib/models/user.dart
 abstract class BaseModel {
   Map<String, dynamic> toJson();
 }
@@ -6,16 +7,17 @@ class User extends BaseModel {
   String _username;
   String _email;
 
-  User({required String username, required String email})
-      : _username = username,
+  User({
+    required String username,
+    required String email,
+  })  : _username = username,
         _email = email;
 
-  // Getter
+  // Getter & Setter
   String get username => _username;
-  String get email => _email;
-
-  // Setter
   set username(String value) => _username = value;
+
+  String get email => _email;
   set email(String value) => _email = value;
 
   // JSON serialization
@@ -25,7 +27,7 @@ class User extends BaseModel {
         'email': _email,
       };
 
-  // factory constructor for decoding
+  // JSON deserialization
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       username: json['username']?.toString() ?? '',
@@ -39,7 +41,7 @@ class User extends BaseModel {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is User && other._username == _username && other._email == _email;
+      other is User && _username == other._username && _email == other._email;
 
   @override
   int get hashCode => _username.hashCode ^ _email.hashCode;

@@ -34,7 +34,7 @@ class _BefloristDrawerState extends State<BefloristDrawer>
   final List<Map<String, dynamic>> _menuItems = [
     {'icon': Icons.home, 'title': 'Home'},
     {'icon': Icons.local_florist, 'title': 'Product'},
-    {'icon': Icons.shopping_cart, 'title': 'Order'},
+    {'icon': Icons.shopping_cart, 'title': 'Keranjang'},
     {'icon': Icons.favorite, 'title': 'Favorite'},
     {'icon': Icons.settings, 'title': 'Settings'},
     {'icon': Icons.person, 'title': 'Account'},
@@ -112,7 +112,7 @@ class _BefloristDrawerState extends State<BefloristDrawer>
                         ),
                       );
                       break;
-                    case 'Order':
+                    case 'Keranjang':
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -134,7 +134,8 @@ class _BefloristDrawerState extends State<BefloristDrawer>
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const SettingsPage(),
+                          builder: (context) =>
+                              SettingPage(currentUser: widget.currentUser),
                         ),
                       );
                       break;
